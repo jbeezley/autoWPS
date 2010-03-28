@@ -312,6 +312,7 @@ float* get_tiff_buffer(
   /* allocate data buffer for image pixel size */
   buffersize=inx*iny*inz*samples_per_pixel*bytes_per_sample;
   buffer=alloc_buffer(buffersize);
+  for(i=0;i<inx*iny*inz*samples_per_pixel;i++) buffer[i]=65535;
   
   /* tiff images can be tiled or striped, we handle each seperately. */
   if ( TIFFIsTiled(file) ) {
@@ -341,18 +342,18 @@ float* get_tiff_buffer(
             i1=i;
             
             /* here we set a pointer to the first element of current column in the current tile. */
-            bptr=( ((tdata_t)buffer) + k*inx*iny+j1*inx*bytes_per_sample+i1*bytes_per_sample);
+            bptr=( ((tdata_t)buffer) + k*inx*iny+j1*inx+i1);
             //fprintf(stdout,"%i\n",k*inx*bytes_per_sample*iny*bytes_per_sample+j1*inx*bytes_per_sample+i1);
-            for(i0=0;i0<tileWidth*bytes_per_sample;i0++) {
+            for(i0=0;i0<tileWidth;i0++) {
               *(unsigned char*)bptr++=*(unsigned char*)tptr++;
               cc++;  /* keep track of number of bytes copied to compare to what was read from TIFFReadTile */
             } /* i0 */
           } /* j0 */
           /* sanity check my programming skills */
-          if (cc > result) {  /* this might be possible for imcomplete tiles */
+          if (cc*bytes_per_sample > result) {  /* this might be possible for imcomplete tiles */
             fprintf(stderr,"WARNING: Tile size=%i < copy size=%i.  This could indicate a bug.\n",(int)result,(int)cc);
           }
-          if (cc < result) { /* this is almost certainly a bug */
+          if (cc*bytes_per_sample < result) { /* this is almost certainly a bug */
             fprintf(stderr,"ERROR: Tile size=%i > copy size=%i!\n",(int)result,(int)cc); 
           }
           
