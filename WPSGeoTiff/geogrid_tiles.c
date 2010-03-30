@@ -201,8 +201,9 @@ void write_index_file(
   fprintf(f,"missing_value = %f\n",idx.missing);
   fprintf(f,"scale_factor = %f\n",idx.scalefactor);
   
-  if (idx.bottom_top) fprintf(f,"row_order = bottom_top\n");
-  else fprintf(f,"row_order = top_bottom\n");
+  fprintf(f,"row_order = bottom_top\n");
+  //if (idx.bottom_top) fprintf(f,"row_order = bottom_top\n");
+  //else fprintf(f,"row_order = top_bottom\n");
   
   if (idx.endian)
     fprintf(f,"endian = little\n");
@@ -222,7 +223,8 @@ void write_tile(
   float *arr              /* tile data buffer */
                 )
 {
-  int itx,ity,isgn,endian,nx,ny,nz;
+  int itx,ity,isgn,endian,nx,ny,nz,i,j;
+  float swp;
   
   /* get global index for construction tile file name */
   itx=itile_x*idx.tx+1;
