@@ -104,6 +104,7 @@ void write_index_file(
       fprintf(f,"known_lat = %f\n",idx.known_lat);
       fprintf(f,"known_lon = %f\n",idx.known_lon);
       fprintf(f,"dx = %e\n",idx.dx);
+      fprintf(f,"dy = %e\n",idx.dy);
       break;
     case polar: /* Polar Stereographic (geogrid code = PROJ_PS) */
       fprintf(f,"projection = %s\n","polar");
@@ -114,6 +115,7 @@ void write_index_file(
       fprintf(f,"known_lat = %f\n",idx.known_lat);
       fprintf(f,"known_lon = %f\n",idx.known_lon);
       fprintf(f,"dx = %e\n",idx.dx);
+      fprintf(f,"dy = %e\n",idx.dy);
       break;
     case mercator: /* Mercator (geogrid code = PROJ_MERC) */
       fprintf(f,"projection = %s\n","mercator");
@@ -124,6 +126,7 @@ void write_index_file(
       fprintf(f,"known_lat = %f\n",idx.known_lat);
       fprintf(f,"known_lon = %f\n",idx.known_lon);
       fprintf(f,"dx = %e\n",idx.dx);
+      fprintf(f,"dy = %e\n",idx.dy);
       break;
     case regular_ll: /* Cylindrical (geographic) Lat/Lon (geogrid code = PROJ_LATLON) */
       fprintf(f,"projection = %s\n","regular_ll");
@@ -156,6 +159,7 @@ void write_index_file(
       fprintf(f,"known_lat = %f\n",idx.known_lat);
       fprintf(f,"known_lon = %f\n",idx.known_lon);
       fprintf(f,"dx = %e\n",idx.dx);
+      fprintf(f,"dy = %e\n",idx.dy);
       break;
     default:
       fprintf(stderr,"Invalid project.");
