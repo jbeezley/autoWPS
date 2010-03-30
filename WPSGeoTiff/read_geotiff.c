@@ -308,7 +308,11 @@ float* get_tiff_buffer(
     exit(EXIT_FAILURE);
   }
    */
-  
+
+     /* allocate data buffer for image pixel size */
+    buffersize=inx*iny*inz*samples_per_pixel*bytes_per_sample;
+    buffer=alloc_buffer(buffersize);
+
  
   /* tiff images can be tiled or striped, we handle each seperately. */
   if ( TIFFIsTiled(file) ) {
@@ -319,10 +323,7 @@ float* get_tiff_buffer(
     TIFFGetField(file, TIFFTAG_TILEWIDTH, &tileWidth);
     TIFFGetField(file, TIFFTAG_TILELENGTH, &tileLength);
  
-    /* allocate data buffer for image pixel size */
-    buffersize=inx*iny*inz*samples_per_pixel*bytes_per_sample;
-    buffer=alloc_buffer(buffersize);
-    for(i=0;i<buffersize;i++) buffer[i]=2;
+     for(i=0;i<buffersize;i++) buffer[i]=2;
   
     for(k=0;k<inz;k++) {                    /* loop over vertical levels */
       for(j=0;j<iny;j += tileLength) {      /* loop over columns of tiles */
