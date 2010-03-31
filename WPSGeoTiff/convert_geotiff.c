@@ -200,9 +200,9 @@ int main (int argc, char * argv[]) {
   idx.missing=missing;
   if(categorical_range) {
     idx.categorical=1;
-    idx.cat_max=categorical_range;
+    idx.cat_max=categorical_range+1;
     idx.cat_min=1;
-    idx.missing=0.;
+    idx.missing=idx.cat_max;
   }
   else {
     idx.categorical=0;
